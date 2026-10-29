@@ -8,11 +8,15 @@ import { DishArt } from "@/components/dish-art";
 import { CountUp, Magnetic, Marquee, Reveal, SplitText, Spotlight, Tilt } from "@/components/fx";
 
 const LOGINS = [
-  ["Owner", "owner@spiceroute.demo"],
-  ["Manager", "manager@spiceroute.demo"],
-  ["Kitchen", "kitchen@spiceroute.demo"],
-  ["Floor staff", "staff@spiceroute.demo"],
-  ["Platform", "platform@foodmania.demo"],
+  ["Spice Route · Owner", "owner@spiceroute.demo"],
+  ["Spice Route · Manager", "manager@spiceroute.demo"],
+  ["Spice Route · Kitchen", "kitchen@spiceroute.demo"],
+  ["Spice Route · Floor staff", "staff@spiceroute.demo"],
+  ["Kettle & Crumb · Kitchen", "kitchen@kettle.demo"],
+  ["Kettle & Crumb · Manager", "manager@kettle.demo"],
+  ["Copper Tap · Kitchen", "kitchen@coppertap.demo"],
+  ["Copper Tap · Manager", "manager@coppertap.demo"],
+  ["Platform admin", "platform@foodmania.demo"],
 ];
 
 const STEPS = [
@@ -139,7 +143,7 @@ export default function Home() {
             ))}
           </div>
           <Reveal className="mt-8 rounded-2xl bg-white p-5 text-sm ring-1 ring-stone">
-            <p className="flex items-center gap-2 font-semibold"><ShieldCheck className="size-4 text-emerald-700" />Staff sign-ins · shared demo password <code className="rounded bg-black/5 px-1.5 py-0.5">demo1234</code></p>
+            <p className="flex items-center gap-2 font-semibold"><ShieldCheck className="size-4 text-emerald-700" />Staff sign-ins (kitchen screen: /kitchen) · shared demo password <code className="rounded bg-black/5 px-1.5 py-0.5">demo1234</code></p>
             <ul className="mt-3 grid gap-x-8 gap-y-1 sm:grid-cols-2">{LOGINS.map(([role, email]) => <li key={email} className="flex flex-wrap justify-between gap-x-3"><span className="text-muted">{role}</span><span className="font-mono text-[12.5px] break-all">{email}</span></li>)}</ul>
             <p className="mt-3 text-xs text-muted">Sample data only. Payments, SMS and email are simulated and labelled as such.</p>
           </Reveal>

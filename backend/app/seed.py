@@ -154,6 +154,8 @@ def seed(db):
     history(db, kc, b, tk, per_day=(8, 16))
     db.add(RecommendationRule(restaurant_id=kc.id, target_type="item", target_id=b.items["Avocado Sourdough"].stable_key, weight=2, featured=True, label="Chef's pick"))
     mk_user(db, "owner@kettle.demo", "Kettle Owner", [(kc, "owner")])
+    mk_user(db, "manager@kettle.demo", "Kettle Manager", [(kc, "manager")])
+    mk_user(db, "kitchen@kettle.demo", "Kettle Kitchen", [(kc, "kitchen")])
 
     # ───────── Spice Route Kitchen — multi-cuisine ─────────
     sr, b = mk_restaurant(db, slug="spice-route", name="Spice Route Kitchen", tagline="North, South and a little Indo-Chinese — under one roof.", venue_type="multi_cuisine", cuisine="North Indian · South Indian · Indo-Chinese",
@@ -230,6 +232,8 @@ def seed(db):
     tc = tables(db, ct, [("1", "Bar"), ("2", "Bar"), ("3", "Booth"), ("4", "Booth"), ("5", "Patio")])
     history(db, ct, b, tc, per_day=(5, 12))
     mk_user(db, "owner@coppertap.demo", "Copper Tap Owner", [(ct, "owner")])
+    mk_user(db, "manager@coppertap.demo", "Copper Tap Manager", [(ct, "manager")])
+    mk_user(db, "kitchen@coppertap.demo", "Copper Tap Kitchen", [(ct, "kitchen")])
     mk_user(db, "platform@foodmania.demo", "Platform Admin", [], platform=True)
     db.commit()
 

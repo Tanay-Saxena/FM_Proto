@@ -26,8 +26,8 @@ export default function Orders() {
   const tables = useQuery({ queryKey: ["tables", rid], queryFn: () => api(`/restaurants/${rid}/tables`), enabled: !!moving });
   const closed = useQuery({ queryKey: ["sessions-closed", rid], queryFn: () => api(`/restaurants/${rid}/sessions?state=closed`), enabled: showClosed && can("sessions.view") });
 
-  const orders = useQuery({ queryKey: ["orders", rid, filter], queryFn: () => api(`/restaurants/${rid}/orders${filter === "active" ? "?state=submitted,accepted,preparing,ready" : "?limit=80"}`), refetchInterval: 5000 });
-  const sessions = useQuery({ queryKey: ["sessions", rid], queryFn: () => api(`/restaurants/${rid}/sessions`), enabled: can("sessions.view"), refetchInterval: 5000 });
+  const orders = useQuery({ queryKey: ["orders", rid, filter], queryFn: () => api(`/restaurants/${rid}/orders${filter === "active" ? "?state=submitted,accepted,preparing,ready" : "?limit=80"}`), refetchInterval: 3000 });
+  const sessions = useQuery({ queryKey: ["sessions", rid], queryFn: () => api(`/restaurants/${rid}/sessions`), enabled: can("sessions.view"), refetchInterval: 3000 });
 
   const move = useMutation({
     mutationFn: ({ id, to, reason }: { id: string; to: string; reason?: string }) => api(`/orders/${id}/status-transition`, { body: { to_state: to, reason: reason ?? "" } }),

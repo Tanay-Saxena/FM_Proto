@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { api, J } from "@/lib/api";
@@ -36,8 +36,8 @@ export default function Payments() {
           <div className="-mx-2 overflow-x-auto"><table className="w-full min-w-[720px] text-left text-[15px]">
             <thead className="text-xs text-muted"><tr><th className="px-2 py-2 font-semibold">Table</th><th className="px-2 py-2 font-semibold">Amount</th><th className="px-2 py-2 font-semibold">Payment</th><th className="px-2 py-2 font-semibold">Reference</th><th className="px-2 py-2 font-semibold">Receipt</th><th /></tr></thead>
             <tbody className="divide-y divide-stone">{pays.data.map((p: J) => (
-              <>
-                <tr key={p.id}>
+              <Fragment key={p.id}>
+                <tr>
                   <td className="px-2 py-3 font-semibold">Table {p.table}</td>
                   <td className="px-2 py-3">{money(p.amount_minor, p.currency)}</td>
                   <td className="px-2 py-3"><Badge tone={PAY[p.state]}>{p.state.replace("_", " ")}</Badge> {p.simulated && <Badge>simulated</Badge>}{p.failure_reason && <p className="mt-0.5 text-xs text-muted">{p.failure_reason}</p>}{p.state === "refunded" && <p className="mt-0.5 text-xs text-muted">Refunded {money(p.refunded_minor, p.currency)} · {p.refund_reason}</p>}</td>
@@ -46,7 +46,7 @@ export default function Payments() {
                   <td className="px-2 py-3 text-right"><Button size="sm" variant="ghost" onClick={() => setOpenPay(openPay === p.id ? null : p.id)}>{openPay === p.id ? "Hide" : "Events"} ({p.events.length})</Button>{p.state === "succeeded" && can("payments.refund") && <Button size="sm" variant="ghost" onClick={() => setRefunding(p)}>Refund…</Button>}{p.receipt && !p.receipt.revoked && can("settings.edit") && <Button size="sm" variant="ghost" onClick={() => revoke.mutate(p.receipt.id)}>Revoke link</Button>}</td>
                 </tr>
                 {openPay === p.id && <tr key={p.id + "e"}><td colSpan={6} className="bg-black/[.03] px-4 py-3"><p className="mb-1 text-xs font-semibold text-muted">Provider events (verified, de-duplicated)</p>{p.events.length === 0 ? <p className="text-sm text-muted">None yet.</p> : <ul className="space-y-1 text-sm">{p.events.map((e: J) => <li key={e.event_id} className="flex flex-wrap gap-x-3"><span className="font-mono text-xs">{e.event_id}</span><span>{e.type}</span><Badge tone={e.outcome === "applied" ? "good" : "warn"}>{e.outcome}</Badge><span className="text-muted">{e.verified ? "signature verified" : "unverified"}</span></li>)}</ul>}</td></tr>}
-              </>
+              </Fragment>
             ))}</tbody></table></div>
         )}
       </Panel>

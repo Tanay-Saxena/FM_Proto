@@ -31,12 +31,19 @@ Dish photo upload (Menu → open a dish) · reorder categories/dishes · reviews
 refund a payment (owner, Admin → Payments) · move a party to another table / re-open a closed one (Admin → Orders) ·
 bill split calculator (guest → My table). Refunds, payments, SMS and email are simulated.
 
+### How orders reach the kitchen (try it)
+Orders are real rows in the database (SQLite file `backend/foodmania.db`) — the seed script only provides the starting
+data; every new order is stored and shown. A kitchen/manager login sees **only its own restaurant**, so order at Spice Route
+and watch with `kitchen@spiceroute.demo`; order at Copper Tap and watch with `kitchen@coppertap.demo`. Open `/kitchen`
+(updates every 2 s, shows "Live · updated Ns ago"). If the restaurant is closed at your real clock time, ordering is
+disabled: tap **Switch to lunch time** on the menu (or use the Demo clock). Copper Tap opens in the evening.
+
 ### Demo accounts (password `demo1234`, sample data only)
 | Role | Email |
 |---|---|
 | Owner (Spice Route) | owner@spiceroute.demo |
 | Manager / Kitchen / Floor staff | manager@ / kitchen@ / staff@spiceroute.demo |
-| Owners of the other venues | owner@kettle.demo, owner@coppertap.demo |
+| Kettle & Crumb / Copper Tap | owner@ / manager@ / kitchen@ `kettle.demo` and `coppertap.demo` |
 | Platform admin | platform@foodmania.demo |
 
 The landing page lists sample tables; each button opens the same URL a printed table QR would. The guest page has a

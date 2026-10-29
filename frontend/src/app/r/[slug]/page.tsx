@@ -94,6 +94,13 @@ export default function RestaurantPage() {
         </header>
 
         <main className="flex-1 px-4 pb-44">
+          {rest.demo_mode && !status.open && (
+            <div role="status" className="tab-in mt-4 rounded-2xl bg-amber-50 p-4 text-amber-950 ring-1 ring-amber-200">
+              <p className="font-semibold">The kitchen is closed right now, so ordering is switched off.</p>
+              <p className="mt-0.5 text-sm">This is a demo: jump to lunch time to order, then watch the ticket appear on the kitchen screen.</p>
+              <Button className="mt-3" variant="brand" size="sm" onClick={() => { setDemoTime(todayAtInZone(12, 30, rest.timezone)); setClockKey((k) => k + 1); qc.invalidateQueries(); }}>Switch to lunch time (12:30 PM)</Button>
+            </div>
+          )}
           <div key={tab} className="tab-in">
           {tab === "menu" && <MenuTab menu={m.data} loading={m.isLoading} error={m.isError ? (m.error as J).message : null} retry={() => m.refetch()} restaurant={rest} canOrder={canOrder}
             onOpen={(i) => { setOpenItem(i); track(slug, "dish_view", i.id); }}

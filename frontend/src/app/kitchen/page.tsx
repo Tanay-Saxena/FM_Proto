@@ -39,9 +39,9 @@ export default function Kitchen() {
   const [reject, setReject] = useState<J | null>(null);
   const [why, setWhy] = useState("");
   const [now, setNow] = useState(Date.now());
-  useEffect(() => { const t = setInterval(() => setNow(Date.now()), 15000); return () => clearInterval(t); }, []);
+  useEffect(() => { const t = setInterval(() => setNow(Date.now()), 1000); return () => clearInterval(t); }, []);
 
-  const q = useQuery({ queryKey: ["kds", cur?.restaurant_id], queryFn: () => api(`/restaurants/${cur.restaurant_id}/kitchen/queue`), enabled: !!cur, refetchInterval: 3000, refetchIntervalInBackground: true });
+  const q = useQuery({ queryKey: ["kds", cur?.restaurant_id], queryFn: () => api(`/restaurants/${cur.restaurant_id}/kitchen/queue`), enabled: !!cur, refetchInterval: 2000, refetchIntervalInBackground: true, refetchOnWindowFocus: true, staleTime: 0 });
   const tickets: J[] = q.data?.tickets ?? [];
 
   useEffect(() => {
@@ -75,7 +75,7 @@ export default function Kitchen() {
           {ms.length > 1 ? <select aria-label="Restaurant" value={cur.restaurant_id} onChange={(e) => { setRid(e.target.value); try { localStorage.setItem("fm:rid", e.target.value); } catch {} seen.current = null; }} className="h-10 rounded-lg border-0 bg-white/10 px-3 font-semibold">{ms.map((m) => <option className="text-ink" key={m.restaurant_id} value={m.restaurant_id}>{m.name}</option>)}</select> : <span className="font-semibold text-white/80">{cur.name}</span>}
         </div>
         <div className="flex items-center gap-2 text-sm">
-          <span className={cx("inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 font-semibold", online ? "bg-white/10 text-lime" : "bg-chilli")} role="status">{online ? <Wifi className="size-4" /> : <WifiOff className="size-4" />}{online ? "Live" : "Reconnecting…"}</span>
+          <span className={cx("inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 font-semibold", online ? "bg-white/10 text-lime" : "bg-chilli")} role="status">{online ? <Wifi className="size-4" /> : <WifiOff className="size-4" />}{online ? `Live · updated ${Math.max(0, Math.round((now - q.dataUpdatedAt) / 1000))}s ago` : "Reconnecting…"}</span>
           <button onClick={() => { setSound(!sound); if (!sound) beep(); }} aria-pressed={sound} className="inline-flex h-10 items-center gap-2 rounded-lg bg-white/10 px-3 font-semibold">{sound ? <Bell className="size-4" /> : <BellOff className="size-4" />}New-order sound {sound ? "on" : "off"}</button>
           <Link href="/admin" className="inline-flex h-10 items-center rounded-lg bg-white/10 px-3 font-semibold">Dashboard</Link>
           <button onClick={logout} aria-label="Sign out" className="grid size-10 place-items-center rounded-lg bg-white/10"><LogOut className="size-4" /></button>
