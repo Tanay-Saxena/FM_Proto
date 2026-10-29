@@ -1,0 +1,8 @@
+# Builds the frontend image with the backend URL baked in (Next.js fixes API rewrites at build time).
+# Run from frontend/: gcloud builds submit --config cloudbuild.yaml --substitutions _BACKEND_URL=https://...
+steps:
+  - name: gcr.io/cloud-builders/docker
+    args: ["build", "--build-arg", "BACKEND_URL=${_BACKEND_URL}", "-t", "${_IMAGE}", "."]
+images: ["${_IMAGE}"]
+substitutions:
+  _IMAGE: asia-south1-docker.pkg.dev/foodmania-proto-6945/cloud-run-source-deploy/foodmania
