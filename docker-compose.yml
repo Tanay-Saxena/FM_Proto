@@ -1,0 +1,9 @@
+# Optional: PostgreSQL for production-like local runs. The default dev setup uses SQLite and needs no Docker.
+# Then: DATABASE_URL=postgresql+psycopg://foodmania:foodmania@localhost:5432/foodmania  (pip install "psycopg[binary]")
+services:
+  db:
+    image: postgres:16
+    environment: { POSTGRES_USER: foodmania, POSTGRES_PASSWORD: foodmania, POSTGRES_DB: foodmania }
+    ports: ["5432:5432"]
+    volumes: ["pgdata:/var/lib/postgresql/data"]
+volumes: { pgdata: {} }
